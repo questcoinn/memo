@@ -1,0 +1,65 @@
+:root {
+  --color-body: #4e5968;
+  --color-border: #e5e8eb;
+  --color-canvas: #ffffff;
+  --color-danger: #e42939;
+  --color-foreground: #191f28;
+  --color-muted: #8b95a1;
+  --color-on-primary: #ffffff;
+  --color-primary: #3182f6;
+  --color-primary-hover: #2272eb;
+  --color-surface: #f2f4f6;
+  --color-weak-background: #e8f3ff;
+  --color-weak-foreground: #1b64da;
+  --color-overlay: rgba(25, 31, 40, 0.5);
+
+  --font-family-sans: 'Pretendard', -apple-system, system-ui, sans-serif;
+
+  --typography-h1-size: 36px;
+  --typography-h1-weight: 700;
+  --typography-h1-line-height: 54px;
+  --typography-h2-size: 30px;
+  --typography-h2-weight: 600;
+  --typography-h2-line-height: 45px;
+  --typography-h3-size: 24px;
+  --typography-h3-weight: 600;
+  --typography-h3-line-height: 36px;
+  --typography-body-size: 16px;
+  --typography-body-weight: 400;
+  --typography-body-line-height: 24px;
+  --typography-body-small-size: 14px;
+  --typography-body-small-weight: 400;
+  --typography-body-small-line-height: 21px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 6px;
+  --spacing-md: 8px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-button: 16px;
+  --radius-card: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background: var(--color-canvas);
+  color: var(--color-foreground);
+}
+
+#app {
+  height: 100vh;
+}

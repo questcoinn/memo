@@ -1,0 +1,16 @@
+{
+  "reference_id": "toss",
+  "description": "메모 앱 만들건데 토스 레퍼런스로 design.md 구성해줘.",
+  "mode": "inspired",
+  "delta_set": {
+    "axes": {},
+    "voiceHints": [],
+    "matchedKeywords": ["calm", "friendly", "trustworthy", "minimal"],
+    "warnings": [
+      "레퍼런스 원 도메인은 Fintech이고 프로젝트는 메모/노트 앱이라 컴포넌트와 카피는 도메인에 맞게 새로 구성함",
+      "프로젝트 고유 사실(이름/시점/thesis/타겟)은 사용자가 'skip'으로 답해 Experience에 반영하지 않음"
+    ]
+  },
+  "application_mode": "project-design-system",
+  "bootstrapped_at": "2026-09-18T00:00:00+09:00"
+}

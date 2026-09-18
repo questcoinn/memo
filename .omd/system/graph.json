@@ -1,0 +1,695 @@
+{
+  "$schema": "https://oh-my-design.kr/schema/design-system-graph-v2.schema.json",
+  "components_states": {
+    "components": [
+      {
+        "anatomy": [
+          "label",
+          "optional-leading-icon",
+          "loading-spinner-slot"
+        ],
+        "id": "button-primary",
+        "interaction": {
+          "kind": "interactive",
+          "state_applicability": {
+            "default": {
+              "applicability": "applicable"
+            },
+            "disabled": {
+              "applicability": "applicable"
+            },
+            "error": {
+              "applicability": "not-applicable",
+              "reason": "버튼 자체는 에러 상태를 갖지 않고, 실패는 화면의 에러 배너/토스트로 전달한다"
+            },
+            "focus-visible": {
+              "applicability": "applicable"
+            },
+            "hover": {
+              "applicability": "applicable"
+            },
+            "loading": {
+              "applicability": "applicable"
+            },
+            "success": {
+              "applicability": "not-applicable",
+              "reason": "성공은 화면 전환이나 토스트로 전달하고 버튼 자체 상태로 표시하지 않는다"
+            }
+          }
+        },
+        "semantics": "새 메모 만들기 등 화면의 단일 주요 액션.",
+        "states": [
+          "default",
+          "hover",
+          "focus-visible",
+          "disabled",
+          "loading",
+          "pressed"
+        ],
+        "token_refs": [
+          "color-primary",
+          "color-primary-hover",
+          "color-on-primary",
+          "radius-button",
+          "typography-body"
+        ],
+        "variants": [
+          "fill",
+          "weak"
+        ]
+      },
+      {
+        "anatomy": [
+          "label",
+          "input",
+          "help-or-error-text"
+        ],
+        "id": "text-field",
+        "interaction": {
+          "kind": "interactive",
+          "state_applicability": {
+            "default": {
+              "applicability": "applicable"
+            },
+            "disabled": {
+              "applicability": "applicable"
+            },
+            "error": {
+              "applicability": "applicable"
+            },
+            "focus-visible": {
+              "applicability": "applicable"
+            },
+            "hover": {
+              "applicability": "not-applicable",
+              "reason": "텍스트 입력 필드는 별도 hover 스타일을 정의하지 않는다"
+            },
+            "loading": {
+              "applicability": "not-applicable",
+              "reason": "입력 필드 자체는 로딩 상태를 갖지 않는다"
+            },
+            "success": {
+              "applicability": "not-applicable",
+              "reason": "저장 성공은 화면 단위 피드백으로 전달한다"
+            }
+          }
+        },
+        "semantics": "메모 제목과 본문을 입력하는 필드.",
+        "states": [
+          "default",
+          "focus-visible",
+          "error",
+          "disabled",
+          "read-only"
+        ],
+        "token_refs": [
+          "color-surface",
+          "color-border",
+          "color-foreground",
+          "color-danger",
+          "radius-md",
+          "typography-body"
+        ],
+        "variants": [
+          "title",
+          "body",
+          "search"
+        ]
+      },
+      {
+        "anatomy": [
+          "label"
+        ],
+        "id": "tag",
+        "interaction": {
+          "kind": "non-interactive",
+          "reason": "기본 태그는 상태 정보 표시용이며, 필터로 쓰일 때의 클릭 동작은 별도 필터-칩 컴포넌트 확장에서 다룬다"
+        },
+        "semantics": "메모를 분류하는 라벨. 클릭 가능한 필터 칩으로도 사용되지만 그 자체는 서술적 정보다.",
+        "states": [
+          "default",
+          "selected"
+        ],
+        "token_refs": [
+          "color-weak-background",
+          "color-weak-foreground",
+          "radius-sm",
+          "typography-body-small"
+        ],
+        "variants": [
+          "fill",
+          "weak"
+        ]
+      },
+      {
+        "anatomy": [
+          "title",
+          "preview-text",
+          "timestamp",
+          "tag-list"
+        ],
+        "id": "note-card",
+        "interaction": {
+          "kind": "interactive",
+          "state_applicability": {
+            "default": {
+              "applicability": "applicable"
+            },
+            "disabled": {
+              "applicability": "not-applicable",
+              "reason": "메모 카드는 비활성화 상태를 갖지 않는다"
+            },
+            "error": {
+              "applicability": "not-applicable",
+              "reason": "개별 카드는 에러 상태를 갖지 않고 목록 전체의 에러 상태로 처리한다"
+            },
+            "focus-visible": {
+              "applicability": "applicable"
+            },
+            "hover": {
+              "applicability": "applicable"
+            },
+            "loading": {
+              "applicability": "not-applicable",
+              "reason": "개별 카드는 로딩 상태를 갖지 않고 목록 전체의 로딩/빈 상태로 처리한다"
+            },
+            "success": {
+              "applicability": "not-applicable",
+              "reason": "카드 자체는 성공 상태를 표시하지 않는다"
+            }
+          }
+        },
+        "semantics": "메모 목록에서 각 메모를 나타내는 카드. 클릭하면 상세/편집 화면으로 이동한다.",
+        "states": [
+          "default",
+          "hover",
+          "focus-visible",
+          "selected"
+        ],
+        "token_refs": [
+          "color-canvas",
+          "color-border",
+          "color-foreground",
+          "color-muted",
+          "radius-card",
+          "typography-h3",
+          "typography-body-small"
+        ],
+        "variants": [
+          "default"
+        ]
+      },
+      {
+        "anatomy": [
+          "title",
+          "message",
+          "cancel-action",
+          "confirm-action"
+        ],
+        "id": "confirm-dialog",
+        "interaction": {
+          "kind": "interactive",
+          "state_applicability": {
+            "default": {
+              "applicability": "applicable"
+            },
+            "disabled": {
+              "applicability": "not-applicable",
+              "reason": "다이얼로그는 비활성화 상태를 갖지 않는다"
+            },
+            "error": {
+              "applicability": "not-applicable",
+              "reason": "다이얼로그 자체는 에러 상태를 갖지 않는다"
+            },
+            "focus-visible": {
+              "applicability": "applicable"
+            },
+            "hover": {
+              "applicability": "not-applicable",
+              "reason": "다이얼로그 자체는 hover 대상이 아니고 내부 버튼이 hover를 갖는다"
+            },
+            "loading": {
+              "applicability": "not-applicable",
+              "reason": "다이얼로그 자체는 비동기 상태를 갖지 않는다. 확인 액션의 결과(성공/실패)는 다이얼로그가 닫힌 뒤 대상 화면에서 표시한다"
+            },
+            "success": {
+              "applicability": "not-applicable",
+              "reason": "다이얼로그 자체는 성공 상태를 갖지 않는다"
+            }
+          }
+        },
+        "semantics": "파괴적 액션(삭제 등)을 실행하기 전 사용자에게 명시적으로 확인받는 모달 다이얼로그.",
+        "states": [
+          "default",
+          "focus-visible"
+        ],
+        "token_refs": [
+          "color-danger",
+          "color-overlay",
+          "radius-md",
+          "radius-card",
+          "typography-body",
+          "typography-h3"
+        ],
+        "variants": [
+          "destructive"
+        ]
+      }
+    ],
+    "rules": [
+      "모든 인터랙티브 컴포넌트는 disabled, loading, error 중 실제로 발생 가능한 상태만 명시적으로 정의한다",
+      "삭제 같은 파괴적 액션은 color-danger로만 표시하고 fill 버튼의 기본 색으로 재사용하지 않는다"
+    ]
+  },
+  "content_locales": {
+    "locales": [
+      {
+        "locale": "ko",
+        "rules": [
+          "기본 언어. 모든 UI 카피의 기준 locale."
+        ],
+        "status": "supported"
+      }
+    ],
+    "voice": [
+      "짧고 직접적인 문장으로 쓴다",
+      "다음 행동을 항상 먼저 이해할 수 있게 쓴다",
+      "모호한 안내나 번역투 표현을 피한다",
+      "빈 화면, 로딩, 에러는 상태와 다음 행동을 함께 설명한다"
+    ]
+  },
+  "experience": {
+    "avoid": [
+      "불필요한 장식(그림자, 그라디언트, 장식용 아이콘 타일)",
+      "모호한 안내 문구와 번역투 표현",
+      "한 화면에 너무 많은 기능을 눌러 담는 과밀한 레이아웃",
+      "브랜드 근거 없는 카드형 UI의 남용"
+    ],
+    "design_direction": [
+      "차분한 화이트 캔버스와 파란색 인터랙션 컬러 하나로 시선을 모은다",
+      "장식적인 그림자나 그라디언트 대신 여백과 위계로 구조를 만든다",
+      "짧고 직접적인 문장으로 다음 행동을 항상 먼저 알려준다"
+    ],
+    "primary_tasks": [
+      "새 메모 빠르게 작성하기",
+      "메모 목록에서 검색하고 다시 찾기",
+      "메모를 편집하고 태그로 정리하기",
+      "필요 없는 메모를 삭제하기"
+    ],
+    "principles": [
+      "한 화면에서 한 번에 이해되는 단순한 흐름을 유지한다",
+      "다음 행동이 항상 명확한 화면을 만든다",
+      "비어있음, 로딩, 에러 상태를 감추지 않고 구체적으로 보여준다",
+      "인터랙션 컬러는 실제 동작이 있는 요소에만 사용한다"
+    ],
+    "summary": "메모를 적고, 목록에서 다시 찾고, 정리하는 세 가지 핵심 동작을 차분한 화이트 캔버스와 단일한 신뢰감 있는 블루 액션 컬러로 지원한다. 화면은 항상 다음에 할 일을 명확히 보여주고, 비어있음/로딩/에러 같은 상태를 숨기지 않는다."
+  },
+  "foundations": {
+    "contrast_pairs": [
+      {
+        "background": "color-canvas",
+        "foreground": "color-foreground",
+        "minimum_ratio": 4.5
+      },
+      {
+        "background": "color-canvas",
+        "foreground": "color-body",
+        "minimum_ratio": 4.5
+      },
+      {
+        "background": "color-primary",
+        "foreground": "color-on-primary",
+        "minimum_ratio": 3
+      },
+      {
+        "background": "color-weak-background",
+        "foreground": "color-weak-foreground",
+        "minimum_ratio": 4.5
+      }
+    ],
+    "reduced_motion": true,
+    "rules": [
+      "color-primary는 실제 동작이 있는 인터랙션 요소에만 사용한다",
+      "color-surface/color-border는 콘텐츠 계층 구분 용도로만 사용하고 장식으로 남용하지 않는다",
+      "font-family-sans가 로드되지 않을 경우 시스템 폰트 스택으로 즉시 폴백한다",
+      "color-on-primary/color-primary 조합은 Toss 검증값을 그대로 이식한 결과 실측 대비 3.71:1로 텍스트 AA 기준(4.5:1)에는 못 미치고 UI 컴포넌트 대비 기준(3:1)만 충족한다. 버튼 라벨은 17px 이상 굵은 글자만 사용하고, 더 낮은 대비가 필요한 곳에는 재사용하지 않는다"
+    ],
+    "tokens": {
+      "color-body": {
+        "$description": "본문 텍스트.",
+        "$type": "color",
+        "$value": "#4e5968"
+      },
+      "color-border": {
+        "$description": "구분선, 옅은 아웃라인.",
+        "$type": "color",
+        "$value": "#e5e8eb"
+      },
+      "color-canvas": {
+        "$description": "기본 배경.",
+        "$type": "color",
+        "$value": "#ffffff"
+      },
+      "color-danger": {
+        "$description": "삭제/에러 등 파괴적 액션과 에러 상태.",
+        "$type": "color",
+        "$value": "#e42939"
+      },
+      "color-foreground": {
+        "$description": "본문 제목 등 가장 강한 텍스트.",
+        "$type": "color",
+        "$value": "#191f28"
+      },
+      "color-muted": {
+        "$description": "보조 텍스트, 타임스탬프 등.",
+        "$type": "color",
+        "$value": "#8b95a1"
+      },
+      "color-on-primary": {
+        "$description": "primary 배경 위 텍스트.",
+        "$type": "color",
+        "$value": "#ffffff"
+      },
+      "color-overlay": {
+        "$description": "모달/다이얼로그 백드롭 오버레이. color-foreground(#191f28)를 50% 알파로 낮춘 값.",
+        "$type": "overlay-color",
+        "$value": "rgba(25, 31, 40, 0.5)"
+      },
+      "color-primary": {
+        "$description": "메모 작성/저장 등 핵심 액션 색상. Toss TDS 인터랙션 블루를 참고.",
+        "$type": "color",
+        "$value": "#3182f6"
+      },
+      "color-primary-hover": {
+        "$description": "primary 액션의 hover/pressed 강조 색상.",
+        "$type": "color",
+        "$value": "#2272eb"
+      },
+      "color-surface": {
+        "$description": "메모 카드/입력 필드의 조용한 배경 레이어.",
+        "$type": "color",
+        "$value": "#f2f4f6"
+      },
+      "color-weak-background": {
+        "$description": "보조 강조 배경(태그, 선택 상태).",
+        "$type": "color",
+        "$value": "#e8f3ff"
+      },
+      "color-weak-foreground": {
+        "$description": "weak-background 위 텍스트/아이콘.",
+        "$type": "color",
+        "$value": "#1b64da"
+      },
+      "font-family-sans": {
+        "$description": "Toss Product Sans는 재배포 권한이 확인되지 않아 오픈소스 한글 폰트 Pretendard(SIL OFL)로 대체하고 시스템 폰트로 안전하게 폴백한다.",
+        "$type": "fontFamily",
+        "$value": [
+          "Pretendard",
+          "-apple-system",
+          "system-ui",
+          "sans-serif"
+        ]
+      },
+      "radius-button": {
+        "$description": "주요 액션 버튼 radius.",
+        "$type": "dimension",
+        "$value": "16px"
+      },
+      "radius-card": {
+        "$description": "메모 카드 radius. Toss xlarge 버튼(16px)과 marketing CTA(7px) 사이에서 카드 표면에 맞게 조정한 값.",
+        "$type": "dimension",
+        "$value": "12px"
+      },
+      "radius-md": {
+        "$description": "입력 필드 등 중간 표면.",
+        "$type": "dimension",
+        "$value": "6px"
+      },
+      "radius-sm": {
+        "$description": "옅은 칩/뱃지 등 작은 표면.",
+        "$type": "dimension",
+        "$value": "4px"
+      },
+      "spacing-lg": {
+        "$type": "dimension",
+        "$value": "16px"
+      },
+      "spacing-md": {
+        "$type": "dimension",
+        "$value": "8px"
+      },
+      "spacing-sm": {
+        "$type": "dimension",
+        "$value": "6px"
+      },
+      "spacing-xl": {
+        "$type": "dimension",
+        "$value": "24px"
+      },
+      "spacing-xs": {
+        "$type": "dimension",
+        "$value": "4px"
+      },
+      "spacing-xxl": {
+        "$type": "dimension",
+        "$value": "32px"
+      },
+      "typography-body": {
+        "$description": "메모 본문, 입력 필드 기본 텍스트.",
+        "$type": "typography",
+        "$value": {
+          "lineHeight": "24px",
+          "size": "16px",
+          "weight": 400
+        }
+      },
+      "typography-body-small": {
+        "$description": "타임스탬프, 도움말, 보조 텍스트.",
+        "$type": "typography",
+        "$value": {
+          "lineHeight": "21px",
+          "size": "14px",
+          "weight": 400
+        }
+      },
+      "typography-h1": {
+        "$description": "메모 상세/편집 화면 제목.",
+        "$type": "typography",
+        "$value": {
+          "lineHeight": "54px",
+          "size": "36px",
+          "weight": 700
+        }
+      },
+      "typography-h2": {
+        "$description": "목록/설정 등 섹션 제목.",
+        "$type": "typography",
+        "$value": {
+          "lineHeight": "45px",
+          "size": "30px",
+          "weight": 600
+        }
+      },
+      "typography-h3": {
+        "$description": "메모 카드 제목.",
+        "$type": "typography",
+        "$value": {
+          "lineHeight": "36px",
+          "size": "24px",
+          "weight": 600
+        }
+      }
+    }
+  },
+  "governance": {
+    "change_policy": [
+      "토큰/컴포넌트 변경은 이 System Graph draft를 수정하고 canonical compiler를 통해 재발행하는 경로로만 이루어진다",
+      "DESIGN.md 본문과 claim marker는 컴파일러 출력만 신뢰하고 직접 수정하지 않는다"
+    ],
+    "decisions": [
+      {
+        "evidence": [
+          "사용자가 '메모 앱 만들건데'라고 직접 지칭함"
+        ],
+        "path": "/identity/name",
+        "source_class": "prompt-fact"
+      },
+      {
+        "evidence": [
+          "사용자가 Toss 레퍼런스를 프로젝트 디자인 시스템으로 채택하기로 확정함"
+        ],
+        "path": "/identity/scope",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "프로젝트 사실(이름/시대/테제/타겟)은 사용자가 skip 응답, 구체 브랜드 사실 없이 메모 앱 도메인에 맞춘 그린필드 제안"
+        ],
+        "path": "/experience",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          ".claude/data/references/toss/DESIGN.md verification_v2 (2026-07-11, computed-style + 공식 TDS 문서)"
+        ],
+        "path": "/foundations/tokens",
+        "source_class": "verified-reference-inspiration"
+      },
+      {
+        "evidence": [
+          "Toss 토큰의 오용을 막기 위한 운영 규칙, Toss 레퍼런스의 Do/Don't 섹션을 메모 도메인에 맞게 재서술"
+        ],
+        "path": "/foundations/rules",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "Toss Product Sans는 재배포 권한 미확인(레퍼런스 §3 Unresolved)이므로 오픈소스 대체 폰트로 그린필드 결정"
+        ],
+        "path": "/typography_assets/assets/0",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "Toss TDS 버튼/텍스트필드/뱃지 상태 계약을 메모 도메인 컴포넌트(button-primary/text-field/tag/note-card)로 재구성"
+        ],
+        "path": "/components_states/components",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "Toss TDS가 모바일 지향임을 참고했지만 반응형 웹 최소 320px 기준은 별도 그린필드 결정"
+        ],
+        "path": "/layout_platforms",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "Toss 레퍼런스 §10 Voice & Tone(Easy to answer / Value first)를 메모 도메인 문구 원칙으로 재서술"
+        ],
+        "path": "/content_locales/voice",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "자동저장 도입(add-note-autosave)으로 명시적 저장 버튼과 onSave가 제거됨 (src/lib/components/NoteEditPanel.svelte), button-primary는 현재 새 메모 만들기에만 쓰임"
+        ],
+        "path": "/components_states/components/0/semantics",
+        "source_class": "repository-fact"
+      },
+      {
+        "evidence": [
+          "window.confirm()는 DESIGN.md 톤을 입힐 수 없어 네이티브 <dialog> 기반 confirm-dialog 컴포넌트로 대체 (openspec/changes/use-dialog-for-delete-confirm/design.md)"
+        ],
+        "path": "/components_states/components/4",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "Toss 레퍼런스에 backdrop/overlay 토큰 없음. color-foreground 50% 알파로 그린필드 결정 (openspec/changes/use-dialog-for-delete-confirm/design.md)"
+        ],
+        "path": "/foundations/tokens/color-overlay",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "메모 목록 검색 입력을 위해 text-field에 search variant 추가 (openspec/changes/add-note-search/design.md)"
+        ],
+        "path": "/components_states/components/1/variants",
+        "source_class": "agent-proposed-greenfield-decision"
+      }
+    ],
+    "priority": [
+      "accessibility",
+      "clarity",
+      "adopted-toss-tone-consistency"
+    ],
+    "unknown_policy": "absent-at-smallest-unresolved-boundary"
+  },
+  "identity": {
+    "kind": "project-system",
+    "name": "메모 앱",
+    "scope": "빠르게 적고 다시 찾기 쉬운 개인 메모/노트 작성 웹 애플리케이션. Toss(토스) 공개 디자인 표면을 조회한 참고 자료를 메모 도메인에 맞게 변형해 적용한다."
+  },
+  "layout_platforms": {
+    "minimum_width_px": 320,
+    "platforms": [
+      {
+        "id": "web",
+        "rules": [
+          "반응형 웹 애플리케이션으로 구현하며 네이티브 앱 셀 규격을 강제하지 않는다"
+        ]
+      }
+    ],
+    "reflow_zoom_percent": 200,
+    "rules": [
+      "터치 타깃은 최소 44px 높이를 확보한다",
+      "모바일 웹을 기준으로 우선 설계하고 데스크톱은 목록/상세 2단 레이아웃으로 확장한다",
+      "메모 목록과 편집 화면은 항상 320px 폭에서 가로 스크롤 없이 재배치된다"
+    ]
+  },
+  "projection": {
+    "locale": "en",
+    "path": "DESIGN.md",
+    "sha256": "b50fa66330e7ba6f26fdf66450c99d3541432d10e778bcf7f20a85127f11d786"
+  },
+  "schema_version": "2.0.0",
+  "typography_assets": {
+    "assets": [
+      {
+        "id": "pretendard",
+        "kind": "font",
+        "license_status": "verified",
+        "notes": "Toss Product Sans는 공식 재배포 권한이 확인되지 않아 채택하지 않고, 유사한 굵기감의 오픈소스 한글 웹폰트로 대체.",
+        "source": "https://github.com/orioncactus/pretendard (SIL OFL 1.1)",
+        "source_status": "licensed-sourced"
+      }
+    ],
+    "roles": [
+      {
+        "family": "font-family-sans",
+        "id": "h1",
+        "line_height": "54px",
+        "size": "36px",
+        "usage": "메모 편집/상세 화면 제목",
+        "weight": 700
+      },
+      {
+        "family": "font-family-sans",
+        "id": "h2",
+        "line_height": "45px",
+        "size": "30px",
+        "usage": "목록·설정 섹션 제목",
+        "weight": 600
+      },
+      {
+        "family": "font-family-sans",
+        "id": "h3",
+        "line_height": "36px",
+        "size": "24px",
+        "usage": "메모 카드 제목",
+        "weight": 600
+      },
+      {
+        "family": "font-family-sans",
+        "id": "body",
+        "line_height": "24px",
+        "size": "16px",
+        "usage": "메모 본문 및 입력 필드",
+        "weight": 400
+      },
+      {
+        "family": "font-family-sans",
+        "id": "body-small",
+        "line_height": "21px",
+        "size": "14px",
+        "usage": "타임스탬프, 도움말, 보조 텍스트",
+        "weight": 400
+      }
+    ],
+    "rules": [
+      "본문/헤딩 모두 font-family-sans 토큰을 통해서만 폰트를 참조한다",
+      "숫자가 포함된 타임스탬프/카운트에는 고정폭 숫자(tabular numerals)를 우선 검토한다"
+    ]
+  }
+}

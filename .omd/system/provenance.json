@@ -1,0 +1,105 @@
+{
+  "decisions": [
+    {
+      "evidence": [
+        ".omd/init-context.json"
+      ],
+      "path": "/identity/name",
+      "source_class": "prompt-fact"
+    },
+    {
+      "evidence": [
+        ".omd/init-context.json"
+      ],
+      "path": "/identity/scope",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        ".omd/init-context.json"
+      ],
+      "path": "/experience",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "path": "/foundations/tokens",
+      "source_class": "verified-reference-inspiration"
+    },
+    {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "path": "/foundations/rules",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "path": "/typography_assets/assets/0",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "path": "/components_states/components",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "path": "/layout_platforms",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "path": "/content_locales/voice",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        ".omd/init-context.json"
+      ],
+      "path": "/governance/priority",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        "src/lib/components/NoteEditPanel.svelte"
+      ],
+      "path": "/components_states/components/0/semantics",
+      "source_class": "repository-fact"
+    },
+    {
+      "evidence": [
+        "openspec/changes/archive/2026-09-18-use-dialog-for-delete-confirm/design.md"
+      ],
+      "path": "/components_states/components/4",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        "openspec/changes/archive/2026-09-18-use-dialog-for-delete-confirm/design.md"
+      ],
+      "path": "/foundations/tokens/color-overlay",
+      "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        "openspec/changes/add-note-search/design.md"
+      ],
+      "path": "/components_states/components/1/variants",
+      "source_class": "agent-proposed-greenfield-decision"
+    }
+  ],
+  "design_md_sha256": "b50fa66330e7ba6f26fdf66450c99d3541432d10e778bcf7f20a85127f11d786",
+  "graph_sha256": "c94e56246101702cc1a121dbcc8a8b3b6c31fee9ad708539070b4bf47c5d384b",
+  "schema_version": "2.0.0"
+}

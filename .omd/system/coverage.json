@@ -1,0 +1,95 @@
+{
+  "checks": {
+    "assets_fonts_licenses": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "bound_system_authority": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "component_state_coverage": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "contrast": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "implementation_contract_complete": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "opaque_extension_preservation": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "portable_core_structure": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "reduced_motion": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "responsive_320_200": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "token_reference_closure": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    },
+    "unknown_absence": {
+      "method": "controller-computed-system-graph-v2",
+      "pass": true
+    }
+  },
+  "design_md_sha256": "b50fa66330e7ba6f26fdf66450c99d3541432d10e778bcf7f20a85127f11d786",
+  "graph_sha256": "c94e56246101702cc1a121dbcc8a8b3b6c31fee9ad708539070b4bf47c5d384b",
+  "groups": {
+    "components-states": {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "status": "covered"
+    },
+    "content-locales": {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "status": "covered"
+    },
+    "experience": {
+      "evidence": [
+        ".omd/init-context.json"
+      ],
+      "status": "covered"
+    },
+    "foundations": {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "status": "covered"
+    },
+    "governance": {
+      "evidence": [
+        ".omd/init-context.json"
+      ],
+      "status": "covered"
+    },
+    "layout-platforms": {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "status": "covered"
+    },
+    "typography-assets": {
+      "evidence": [
+        ".claude/data/references/toss/DESIGN.md"
+      ],
+      "status": "covered"
+    }
+  },
+  "schema_version": "2.0.0"
+}
