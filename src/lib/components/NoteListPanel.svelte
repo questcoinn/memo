@@ -5,11 +5,12 @@
   interface Props {
     notes: Note[]
     selectedId: string | null
+    loadErrorMessage: string | null
     onSelect: (note: Note) => void
     onNew: () => void
   }
 
-  let { notes, selectedId, onSelect, onNew }: Props = $props()
+  let { notes, selectedId, loadErrorMessage, onSelect, onNew }: Props = $props()
 
   let searchQuery = $state('')
 
@@ -36,7 +37,9 @@
     bind:value={searchQuery}
   />
 
-  {#if notes.length === 0}
+  {#if loadErrorMessage}
+    <p class="empty-state load-error" role="alert">{loadErrorMessage}</p>
+  {:else if notes.length === 0}
     <p class="empty-state">아직 메모가 없어요. "새 메모"로 시작해보세요.</p>
   {:else if filteredNotes.length === 0}
     <p class="empty-state">"{searchQuery}"와 일치하는 메모가 없어요.</p>
@@ -119,6 +122,10 @@
   .empty-state {
     font-size: var(--typography-body-size);
     color: var(--color-muted);
+  }
+
+  .load-error {
+    color: var(--color-danger);
   }
 
   .note-list {

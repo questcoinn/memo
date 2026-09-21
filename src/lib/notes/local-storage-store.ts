@@ -2,21 +2,45 @@ import type { Note } from './types'
 import type { NoteStore } from './store'
 
 const STORAGE_KEY = 'memo.notes.v1'
+const BACKUP_KEY = `${STORAGE_KEY}.corrupted-backup`
 
-function readAll(): Note[] {
+interface RawRead {
+  notes: Note[]
+  corrupted: boolean
+  raw: string | null
+}
+
+function parseNotes(raw: string): Note[] | null {
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : null
+  } catch {
+    return null
+  }
+}
+
+function readRaw(): RawRead {
   let raw: string | null
   try {
     raw = localStorage.getItem(STORAGE_KEY)
   } catch {
-    return []
+    return { notes: [], corrupted: false, raw: null }
   }
-  if (!raw) return []
+  if (!raw) return { notes: [], corrupted: false, raw: null }
+  const parsed = parseNotes(raw)
+  if (parsed === null) return { notes: [], corrupted: true, raw }
+  return { notes: parsed, corrupted: false, raw }
+}
+
+function readAll(): Note[] {
+  return readRaw().notes
+}
+
+function backupCorrupted(raw: string): void {
   try {
-    const parsed = JSON.parse(raw)
-    if (!Array.isArray(parsed)) return []
-    return parsed
+    localStorage.setItem(BACKUP_KEY, raw)
   } catch {
-    return []
+    // best-effort; nothing more we can do if this also fails
   }
 }
 
@@ -28,9 +52,22 @@ function writeAll(notes: Note[]): void {
   }
 }
 
+export function getCorruptedBackup(): string | null {
+  try {
+    return localStorage.getItem(BACKUP_KEY)
+  } catch {
+    return null
+  }
+}
+
 export class LocalStorageNoteStore implements NoteStore {
   async list(): Promise<Note[]> {
-    return readAll()
+    const result = readRaw()
+    if (result.corrupted && result.raw) {
+      backupCorrupted(result.raw)
+      throw new Error('메모를 불러오지 못했어요. 저장된 데이터에 문제가 있는 것 같아요.')
+    }
+    return result.notes
   }
 
   async get(id: string): Promise<Note | undefined> {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import type { Note } from './lib/notes/types'
-  import { LocalStorageNoteStore } from './lib/notes/local-storage-store'
+  import { LocalStorageNoteStore, getCorruptedBackup } from './lib/notes/local-storage-store'
   import NoteListPanel from './lib/components/NoteListPanel.svelte'
   import NoteEditPanel from './lib/components/NoteEditPanel.svelte'
 
@@ -15,6 +15,8 @@
   let isNewDraft = $state(false)
   let saveStatus = $state<'idle' | 'saving' | 'error'>('idle')
   let saveErrorMessage = $state<string | null>(null)
+  let loadErrorMessage = $state<string | null>(null)
+  let loadErrorRawData = $state<string | null>(null)
 
   let debounceTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -36,7 +38,13 @@
   )
 
   onMount(async () => {
-    notes = await noteStore.list()
+    try {
+      notes = await noteStore.list()
+    } catch (error) {
+      notes = []
+      loadErrorMessage = error instanceof Error ? error.message : '메모를 불러오지 못했어요.'
+      loadErrorRawData = getCorruptedBackup()
+    }
   })
 
   async function persistDraft(): Promise<boolean> {
@@ -131,7 +139,13 @@
 
 <main class="shell" data-has-draft={draft !== null}>
   <div class="pane list-pane">
-    <NoteListPanel notes={sortedNotes} selectedId={selectedNoteId} onSelect={openNote} onNew={startNewNote} />
+    <NoteListPanel
+      notes={sortedNotes}
+      selectedId={selectedNoteId}
+      {loadErrorMessage}
+      onSelect={openNote}
+      onNew={startNewNote}
+    />
   </div>
   <div class="pane edit-pane">
     <NoteEditPanel
@@ -139,6 +153,7 @@
       {isNewDraft}
       {saveStatus}
       {saveErrorMessage}
+      {loadErrorRawData}
       onEdit={scheduleAutosave}
       onDelete={deleteCurrentNote}
       onBack={goBack}
