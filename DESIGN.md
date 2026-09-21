@@ -80,6 +80,7 @@
 - **spacing-xs**: `4px`
 - **spacing-xxl**: `32px`
 - **typography-body**: `{"lineHeight":"24px","size":"16px","weight":400}` — 메모 본문, 입력 필드 기본 텍스트.
+- **typography-body-heading**: `{"lineHeight":"30px","size":"20px","weight":600}` — 메모 본문 안의 소제목(## 마커로 확정). h3(카드 제목)보다 한 단계 작고 본문보다 큼.
 - **typography-body-small**: `{"lineHeight":"21px","size":"14px","weight":400}` — 타임스탬프, 도움말, 보조 텍스트.
 - **typography-h1**: `{"lineHeight":"54px","size":"36px","weight":700}` — 메모 상세/편집 화면 제목.
 - **typography-h2**: `{"lineHeight":"45px","size":"30px","weight":600}` — 목록/설정 등 섹션 제목.
@@ -119,6 +120,7 @@ Required.
 | h3 | 메모 카드 제목 | font-family-sans | 24px | 600 | 36px |
 | body | 메모 본문 및 입력 필드 | font-family-sans | 16px | 400 | 24px |
 | body-small | 타임스탬프, 도움말, 보조 텍스트 | font-family-sans | 14px | 400 | 21px |
+| body-heading | 메모 본문 안의 소제목 (## 마커를 Tab으로 확정한 줄) | font-family-sans | 20px | 600 | 30px |
 
 ### Assets
 
@@ -341,3 +343,4 @@ Record, review, and validate changes before adoption.
 - /components_states/components/4 — agent-proposed-greenfield-decision; evidence: window.confirm()는 DESIGN.md 톤을 입힐 수 없어 네이티브 <dialog> 기반 confirm-dialog 컴포넌트로 대체 (openspec/changes/use-dialog-for-delete-confirm/design.md)
 - /foundations/tokens/color-overlay — agent-proposed-greenfield-decision; evidence: Toss 레퍼런스에 backdrop/overlay 토큰 없음. color-foreground 50% 알파로 그린필드 결정 (openspec/changes/use-dialog-for-delete-confirm/design.md)
 - /components_states/components/1/variants — agent-proposed-greenfield-decision; evidence: 메모 목록 검색 입력을 위해 text-field에 search variant 추가 (openspec/changes/add-note-search/design.md)
+- /typography_assets/roles/5 — agent-proposed-greenfield-decision; evidence: openspec/changes/add-note-body-formatting/design.md

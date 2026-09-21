@@ -30,6 +30,9 @@
   --typography-body-small-size: 14px;
   --typography-body-small-weight: 400;
   --typography-body-small-line-height: 21px;
+  --typography-body-heading-size: 20px;
+  --typography-body-heading-weight: 600;
+  --typography-body-heading-line-height: 30px;
 
   --spacing-xs: 4px;
   --spacing-sm: 6px;

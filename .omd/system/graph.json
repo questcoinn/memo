@@ -463,6 +463,15 @@
           "weight": 400
         }
       },
+      "typography-body-heading": {
+        "$description": "메모 본문 안의 소제목(## 마커로 확정). h3(카드 제목)보다 한 단계 작고 본문보다 큼.",
+        "$type": "typography",
+        "$value": {
+          "lineHeight": "30px",
+          "size": "20px",
+          "weight": 600
+        }
+      },
       "typography-body-small": {
         "$description": "타임스탬프, 도움말, 보조 텍스트.",
         "$type": "typography",
@@ -597,6 +606,13 @@
         ],
         "path": "/components_states/components/1/variants",
         "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "openspec/changes/add-note-body-formatting/design.md"
+        ],
+        "path": "/typography_assets/roles/5",
+        "source_class": "agent-proposed-greenfield-decision"
       }
     ],
     "priority": [
@@ -631,7 +647,7 @@
   "projection": {
     "locale": "en",
     "path": "DESIGN.md",
-    "sha256": "b50fa66330e7ba6f26fdf66450c99d3541432d10e778bcf7f20a85127f11d786"
+    "sha256": "bfe6e4ffe048041b6826a803ec3347846f68fe718406f2696d21beec7c6d10ef"
   },
   "schema_version": "2.0.0",
   "typography_assets": {
@@ -685,6 +701,14 @@
         "size": "14px",
         "usage": "타임스탬프, 도움말, 보조 텍스트",
         "weight": 400
+      },
+      {
+        "family": "font-family-sans",
+        "id": "body-heading",
+        "line_height": "30px",
+        "size": "20px",
+        "usage": "메모 본문 안의 소제목 (## 마커를 Tab으로 확정한 줄)",
+        "weight": 600
       }
     ],
     "rules": [

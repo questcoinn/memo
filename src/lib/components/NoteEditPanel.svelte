@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Note } from '../notes/types'
   import ConfirmDialog from './ConfirmDialog.svelte'
+  import NoteBodyEditor from './NoteBodyEditor.svelte'
 
   interface Props {
     draft: Note | null
@@ -42,12 +43,14 @@
       oninput={onEdit}
     />
 
-    <textarea
-      class="body-field"
+    <NoteBodyEditor
+      value={draft.body}
       placeholder="메모를 입력하세요"
-      bind:value={draft.body}
-      oninput={onEdit}
-    ></textarea>
+      onInput={(newBody) => {
+        draft.body = newBody
+        onEdit()
+      }}
+    />
 
     {#if saveStatus === 'saving'}
       <p class="save-status">저장 중…</p>
@@ -130,25 +133,6 @@
   .title-field:focus-visible {
     outline: none;
     border-bottom-color: var(--color-primary);
-  }
-
-  .body-field {
-    flex: 1;
-    resize: none;
-    font-family: inherit;
-    font-size: var(--typography-body-size);
-    font-weight: var(--typography-body-weight);
-    line-height: var(--typography-body-line-height);
-    color: var(--color-body);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-  }
-
-  .body-field:focus-visible {
-    outline: none;
-    border-color: var(--color-primary);
   }
 
   .save-status {
