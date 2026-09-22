@@ -149,7 +149,7 @@
   </div>
   <div class="pane edit-pane">
     <NoteEditPanel
-      {draft}
+      bind:draft
       {isNewDraft}
       {saveStatus}
       {saveErrorMessage}

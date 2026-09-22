@@ -15,7 +15,7 @@
   }
 
   let {
-    draft,
+    draft = $bindable(),
     isNewDraft,
     saveStatus,
     saveErrorMessage,
