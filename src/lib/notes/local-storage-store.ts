@@ -13,7 +13,8 @@ interface RawRead {
 function parseNotes(raw: string): Note[] | null {
   try {
     const parsed = JSON.parse(raw)
-    return Array.isArray(parsed) ? parsed : null
+    if (!Array.isArray(parsed)) return null
+    return parsed.map((note) => ({ tags: [], ...note }))
   } catch {
     return null
   }

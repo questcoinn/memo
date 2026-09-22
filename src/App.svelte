@@ -24,9 +24,24 @@
     [...notes].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
   )
 
+  const allTags = $derived.by(() => {
+    const seen = new Map<string, string>()
+    for (const note of notes) {
+      for (const tag of note.tags) {
+        const lower = tag.toLowerCase()
+        if (!seen.has(lower)) seen.set(lower, tag)
+      }
+    }
+    return [...seen.values()].sort((a, b) => a.localeCompare(b))
+  })
+
   const persistedSelected = $derived(
     selectedNoteId === null ? null : notes.find((note) => note.id === selectedNoteId) ?? null,
   )
+
+  function sameTags(a: string[], b: string[]): boolean {
+    return a.length === b.length && a.every((tag, index) => tag === b[index])
+  }
 
   const isDirty = $derived(
     draft === null
@@ -34,7 +49,9 @@
       : isNewDraft
         ? Boolean(draft.title.trim() || draft.body.trim())
         : persistedSelected !== null &&
-          (draft.title !== persistedSelected.title || draft.body !== persistedSelected.body),
+          (draft.title !== persistedSelected.title ||
+            draft.body !== persistedSelected.body ||
+            !sameTags(draft.tags, persistedSelected.tags)),
   )
 
   onMount(async () => {
@@ -107,7 +124,7 @@
     if (!(await flushPendingSave())) return
     const now = new Date().toISOString()
     selectedNoteId = null
-    draft = { id: crypto.randomUUID(), title: '', body: '', createdAt: now, updatedAt: now }
+    draft = { id: crypto.randomUUID(), title: '', body: '', tags: [], createdAt: now, updatedAt: now }
     isNewDraft = true
     saveStatus = 'idle'
     saveErrorMessage = null
@@ -154,6 +171,7 @@
       {saveStatus}
       {saveErrorMessage}
       {loadErrorRawData}
+      {allTags}
       onEdit={scheduleAutosave}
       onDelete={deleteCurrentNote}
       onBack={goBack}

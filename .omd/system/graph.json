@@ -301,6 +301,63 @@
           "color-primary-hover",
           "typography-body"
         ]
+      },
+      {
+        "anatomy": [
+          "chip-list",
+          "chip-remove-control",
+          "text-input",
+          "suggestion-list"
+        ],
+        "id": "tag-input",
+        "interaction": {
+          "kind": "interactive",
+          "state_applicability": {
+            "default": {
+              "applicability": "applicable"
+            },
+            "disabled": {
+              "applicability": "not-applicable",
+              "reason": "메모 편집 화면에 있는 동안은 항상 입력 가능한 상태로만 존재한다"
+            },
+            "error": {
+              "applicability": "not-applicable",
+              "reason": "태그 추가/삭제 자체는 실패하지 않는 로컬 상태 변경이며, 저장 실패는 화면의 저장-상태 메시지로 전달된다"
+            },
+            "focus-visible": {
+              "applicability": "applicable"
+            },
+            "hover": {
+              "applicability": "not-applicable",
+              "reason": "text-field와 마찬가지로 입력기 자체에는 별도 hover 스타일을 정의하지 않는다"
+            },
+            "loading": {
+              "applicability": "not-applicable",
+              "reason": "태그 변경은 기존 메모 자동저장 파이프라인을 그대로 타므로 입력기 자체는 별도 로딩 상태를 갖지 않는다"
+            },
+            "success": {
+              "applicability": "not-applicable",
+              "reason": "성공은 칩이 즉시 나타나는 것으로 전달되며 별도 성공 상태를 표시하지 않는다"
+            }
+          }
+        },
+        "semantics": "메모에 태그를 추가/삭제하는 칩 입력기. 텍스트를 입력해 Enter로 태그를 확정하거나, 다른 메모에서 이미 쓰인 태그의 자동완성 제안을 선택해 추가한다.",
+        "states": [
+          "default",
+          "focus-visible",
+          "has-suggestions"
+        ],
+        "token_refs": [
+          "color-weak-background",
+          "color-weak-foreground",
+          "radius-sm",
+          "typography-body-small",
+          "color-surface",
+          "color-border",
+          "radius-md",
+          "typography-body",
+          "color-primary"
+        ]
       }
     ],
     "rules": [
@@ -666,6 +723,13 @@
           "URL 형태 텍스트를 감지해 만드는 인라인 링크 컴포넌트, button-primary와 동일한 color-primary/color-primary-hover 토큰 쌍 재사용 (openspec/changes/add-note-link-formatting/design.md)"
         ],
         "path": "/components_states/components/5",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "메모에 태그를 부여하는 칩 입력기. 기존 tag는 non-interactive로 못박혀 있어 재사용 불가하여 별도 인터랙티브 컴포넌트로 추가 (openspec/changes/add-note-tags/design.md)"
+        ],
+        "path": "/components_states/components/6",
         "source_class": "agent-proposed-greenfield-decision"
       }
     ],

@@ -29,6 +29,13 @@
   <span class="title">{note.title.trim() || '제목 없음'}</span>
   <span class="preview">{preview}</span>
   <span class="timestamp">{updatedAtLabel}</span>
+  {#if note.tags.length > 0}
+    <ul class="tag-list">
+      {#each note.tags as tag (tag)}
+        <li class="tag">{tag}</li>
+      {/each}
+    </ul>
+  {/if}
 </button>
 
 <style>
@@ -85,5 +92,24 @@
     font-weight: var(--typography-body-small-weight);
     line-height: var(--typography-body-small-line-height);
     color: var(--color-muted);
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tag {
+    font-size: var(--typography-body-small-size);
+    font-weight: var(--typography-body-small-weight);
+    line-height: var(--typography-body-small-line-height);
+    color: var(--color-weak-foreground);
+    background: var(--color-weak-background);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 </style>

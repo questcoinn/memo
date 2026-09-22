@@ -2,6 +2,7 @@
   import type { Note } from '../notes/types'
   import ConfirmDialog from './ConfirmDialog.svelte'
   import NoteBodyEditor from './NoteBodyEditor.svelte'
+  import TagInput from './TagInput.svelte'
 
   interface Props {
     draft: Note | null
@@ -9,6 +10,7 @@
     saveStatus: 'idle' | 'saving' | 'error'
     saveErrorMessage: string | null
     loadErrorRawData: string | null
+    allTags: string[]
     onEdit: () => void
     onDelete: () => void
     onBack: () => void
@@ -20,6 +22,7 @@
     saveStatus,
     saveErrorMessage,
     loadErrorRawData,
+    allTags,
     onEdit,
     onDelete,
     onBack,
@@ -74,6 +77,16 @@
       placeholder="제목 없음"
       bind:value={draft.title}
       oninput={onEdit}
+    />
+
+    <TagInput
+      tags={draft.tags}
+      {allTags}
+      onChange={(tags) => {
+        if (draft === null) return
+        draft.tags = tags
+        onEdit()
+      }}
     />
 
     <NoteBodyEditor
