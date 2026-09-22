@@ -1,5 +1,6 @@
 <script lang="ts">
   import { parseBody, type BodyLine } from '../notes/body-format'
+  import { splitIntoRuns } from '../notes/link-format'
 
   interface Props {
     value: string
@@ -47,11 +48,77 @@
     return el
   }
 
+  function createLinkElement(url: string): HTMLAnchorElement {
+    const a = document.createElement('a')
+    a.href = url.startsWith('www.') ? `https://${url}` : url
+    a.textContent = url
+    a.contentEditable = 'false'
+    a.target = '_blank'
+    a.rel = 'noopener noreferrer'
+    a.className = 'inline-link'
+    return a
+  }
+
+  // Independent of confirmLine — a link can appear in any line type, confirmed or not.
+  function confirmLinks(lineEl: HTMLElement) {
+    // Replacing a text node the caret points into resets the selection, so capture/restore it.
+    const selection = document.getSelection()
+    const caretWasHere =
+      selection !== null && selection.rangeCount > 0 && lineEl.contains(selection.getRangeAt(0).startContainer)
+    const preservedOffset = caretWasHere ? caretOffsetInLine(lineEl) : -1
+
+    let changed = false
+    for (const child of Array.from(lineEl.childNodes)) {
+      if (child.nodeType !== Node.TEXT_NODE) continue
+      const runs = splitIntoRuns(child.textContent ?? '')
+      if (runs.length === 1 && runs[0].type === 'text') continue
+      const replacement = runs.map((run) =>
+        run.type === 'link' ? createLinkElement(run.url) : document.createTextNode(run.value),
+      )
+      child.replaceWith(...replacement)
+      changed = true
+    }
+
+    if (changed && preservedOffset >= 0) {
+      placeCaretAtOffset(lineEl, preservedOffset)
+    }
+  }
+
+  function linkImmediatelyBefore(range: Range): HTMLAnchorElement | null {
+    const { startContainer, startOffset } = range
+    if (startContainer.nodeType === Node.TEXT_NODE) {
+      if (startOffset !== 0) return null
+      const prev = startContainer.previousSibling
+      return prev instanceof HTMLAnchorElement ? prev : null
+    }
+    if (startContainer.nodeType === Node.ELEMENT_NODE) {
+      const prev = startContainer.childNodes[startOffset - 1]
+      return prev instanceof HTMLAnchorElement ? prev : null
+    }
+    return null
+  }
+
+  // Moves child nodes onto prevEl (not via .textContent) so links on either side survive.
+  function mergeLineIntoPrevious(lineEl: HTMLElement, prevEl: HTMLElement) {
+    const mergeOffset = prevEl.textContent?.length ?? 0
+    if (mergeOffset === 0) prevEl.replaceChildren() // drop prevEl's own empty-line <br> placeholder
+    for (const child of Array.from(lineEl.childNodes)) {
+      if (child instanceof HTMLBRElement) continue // lineEl's own empty-line placeholder, if any
+      prevEl.appendChild(child)
+    }
+    if (prevEl.childNodes.length === 0) prevEl.appendChild(document.createElement('br'))
+    lineEl.remove()
+    placeCaretAtOffset(prevEl, mergeOffset)
+    activeLineEl = prevEl
+  }
+
   function renderAll(body: string) {
     if (!containerEl) return
     containerEl.replaceChildren()
     for (const line of parseBody(body)) {
-      containerEl.appendChild(createLineElement(line))
+      const el = createLineElement(line)
+      confirmLinks(el)
+      containerEl.appendChild(el)
     }
     activeLineEl = null
   }
@@ -122,17 +189,36 @@
   }
 
   function placeCaretAtOffset(lineEl: HTMLElement, offset: number) {
-    const textNode = lineEl.firstChild
-    const range = document.createRange()
-    if (textNode && textNode.nodeType === Node.TEXT_NODE) {
-      range.setStart(textNode, Math.min(offset, textNode.textContent?.length ?? 0))
-    } else {
-      range.selectNodeContents(lineEl)
-    }
-    range.collapse(true)
+    let remaining = Math.max(0, offset)
     const selection = document.getSelection()
-    selection?.removeAllRanges()
-    selection?.addRange(range)
+    const range = document.createRange()
+
+    for (const child of Array.from(lineEl.childNodes)) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const len = child.textContent?.length ?? 0
+        if (remaining <= len) {
+          range.setStart(child, remaining)
+          range.collapse(true)
+          selection?.removeAllRanges()
+          selection?.addRange(range)
+          return
+        }
+        remaining -= len
+      } else {
+        // Atomic children are never entered — snap before one if the offset lands at/inside it.
+        const len = child.textContent?.length ?? 0
+        if (remaining <= 0 || remaining < len) {
+          range.setStartBefore(child)
+          range.collapse(true)
+          selection?.removeAllRanges()
+          selection?.addRange(range)
+          return
+        }
+        remaining -= len
+      }
+    }
+
+    placeCaret(lineEl, false)
   }
 
   function parseLineForConfirm(text: string): { type: 'heading' | 'list-item'; text: string } | null {
@@ -157,8 +243,7 @@
   function revertLine(lineEl: HTMLElement) {
     const type = lineEl.dataset.lineType
     const text = lineEl.textContent ?? ''
-    // List items don't restore their marker text; headings still do here
-    // (only reached when empty, with no preceding line).
+    // List items don't restore their marker text; headings still do (empty, no preceding line only).
     const restored = type === 'heading' ? `## ${text}` : text
     lineEl.dataset.lineType = 'paragraph'
     delete lineEl.dataset.depth
@@ -182,8 +267,7 @@
     const text = lineEl.textContent ?? ''
     const currentType = lineEl.dataset.lineType ?? 'paragraph'
 
-    // Enter on an empty list item exits list formatting instead of creating
-    // another empty item.
+    // Enter on an empty list item exits list formatting instead of creating another item.
     if (currentType === 'list-item' && text.length === 0) {
       lineEl.dataset.lineType = 'paragraph'
       delete lineEl.dataset.depth
@@ -193,9 +277,7 @@
       return
     }
 
-    // Enter at the start of a heading pushes it down (a blank line is
-    // inserted above) instead of splitting its text away. List items are
-    // excluded — splitting into two list items below keeps the list intact.
+    // Enter at the start of a heading pushes it down; list items split into two items instead.
     if (offset === 0 && text.length > 0 && currentType !== 'list-item') {
       const blank = createLineElement({ type: 'paragraph', text: '' })
       lineEl.before(blank)
@@ -204,10 +286,13 @@
       return
     }
 
-    const before = offset >= 0 ? text.slice(0, offset) : text
-    const after = offset >= 0 ? text.slice(offset) : ''
-    setLineContent(lineEl, before)
+    // DOM-level split (not flattened-string) so a link before the caret survives.
+    const clampedOffset = offset >= 0 ? offset : text.length
+    const { keepInBefore, moveToAfter } = splitLineNodes(lineEl, clampedOffset)
+    lineEl.replaceChildren(...keepInBefore)
+    if (keepInBefore.length === 0) lineEl.appendChild(document.createElement('br'))
 
+    const after = moveToAfter.map((node) => node.textContent ?? '').join('')
     const newLine: BodyLine =
       currentType === 'list-item'
         ? { type: 'list-item', text: after, depth: Number(lineEl.dataset.depth ?? '0') }
@@ -218,6 +303,39 @@
     activeLineEl = newEl
   }
 
+  // Splits at offset: a straddling text node is split; an atomic link is never split mid-span.
+  function splitLineNodes(lineEl: HTMLElement, offset: number): { keepInBefore: Node[]; moveToAfter: Node[] } {
+    const keepInBefore: Node[] = []
+    const moveToAfter: Node[] = []
+    let remaining = offset
+    let pastSplit = false
+
+    for (const child of Array.from(lineEl.childNodes)) {
+      if (pastSplit) {
+        moveToAfter.push(child)
+        continue
+      }
+      const len = child.textContent?.length ?? 0
+      if (remaining >= len) {
+        keepInBefore.push(child)
+        remaining -= len
+        continue
+      }
+      if (child.nodeType === Node.TEXT_NODE) {
+        const text = child.textContent ?? ''
+        const beforeText = text.slice(0, remaining)
+        const afterText = text.slice(remaining)
+        if (beforeText) keepInBefore.push(document.createTextNode(beforeText))
+        if (afterText) moveToAfter.push(document.createTextNode(afterText))
+      } else {
+        moveToAfter.push(child)
+      }
+      pastSplit = true
+    }
+
+    return { keepInBefore, moveToAfter }
+  }
+
   function handleInput() {
     // Editing a reverted line again makes it eligible for confirmation again.
     const lineEl = currentLineEl()
@@ -226,8 +344,7 @@
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    // Reading textContent mid-composition races the IME's commit and can
-    // corrupt/duplicate the composing text.
+    // Reading textContent mid-composition races the IME's commit and can corrupt the text.
     if (event.isComposing) return
 
     const lineEl = currentLineEl()
@@ -240,6 +357,7 @@
       } else if (!event.shiftKey && confirmLine(lineEl)) {
         placeCaret(lineEl, false)
       }
+      confirmLinks(lineEl)
       emit()
       return
     }
@@ -247,14 +365,32 @@
     if (event.key === 'Backspace') {
       const selection = document.getSelection()
       const offset = caretOffsetInLine(lineEl)
-      // Only a collapsed caret triggers revert/delete; a selection should
-      // just delete its text normally.
-      if (selection?.isCollapsed && offset === 0 && lineEl.dataset.lineType !== 'paragraph') {
+
+      // A confirmed link is atomic — Backspace right after one deletes it whole (never at offset 0).
+      if (selection?.isCollapsed && offset > 0) {
+        const range = selection.getRangeAt(0)
+        const precedingLink = linkImmediatelyBefore(range)
+        if (precedingLink) {
+          event.preventDefault()
+          const linkLength = precedingLink.textContent?.length ?? 0
+          precedingLink.remove()
+          placeCaretAtOffset(lineEl, offset - linkLength)
+          emit()
+          return
+        }
+      }
+
+      // Only a collapsed caret triggers revert/delete/merge; a selection just deletes normally.
+      if (selection?.isCollapsed && offset === 0) {
         event.preventDefault()
         const isEmptyLine = (lineEl.textContent ?? '').length === 0
         const prevEl = lineEl.previousElementSibling as HTMLElement | null
+        const lineType = lineEl.dataset.lineType ?? 'paragraph'
 
-        if (isEmptyLine) {
+        if (lineType === 'paragraph') {
+          // No marker to revert to — merge into the previous line (native div-merge corrupts links).
+          if (prevEl) mergeLineIntoPrevious(lineEl, prevEl)
+        } else if (isEmptyLine) {
           if (prevEl) {
             lineEl.remove()
             placeCaret(prevEl, false)
@@ -263,28 +399,22 @@
             revertLine(lineEl)
             placeCaret(lineEl, true)
           }
-        } else if (lineEl.dataset.lineType === 'heading' && prevEl) {
+        } else if (lineType === 'heading' && prevEl) {
           if (prevEl.dataset.lineType === 'paragraph' && (prevEl.textContent ?? '').length === 0) {
             // Empty spacer line above — remove it, leave the heading untouched.
             prevEl.remove()
             placeCaret(lineEl, true)
             activeLineEl = lineEl
           } else {
-            // Otherwise merge this heading's text into the end of the line
-            // above, dropping its heading style.
-            const mergeOffset = (prevEl.textContent ?? '').length
-            setLineContent(prevEl, (prevEl.textContent ?? '') + (lineEl.textContent ?? ''))
-            lineEl.remove()
-            placeCaretAtOffset(prevEl, mergeOffset)
-            activeLineEl = prevEl
+            // Otherwise merge into the line above, dropping the heading style.
+            mergeLineIntoPrevious(lineEl, prevEl)
           }
-        } else if (lineEl.dataset.lineType === 'list-item') {
-          // List items revert in place instead of merging; revertLine()
-          // leaves the bare text, no marker.
+        } else if (lineType === 'list-item') {
+          // List items revert in place instead of merging; revertLine() leaves bare text, no marker.
           revertLine(lineEl)
           placeCaret(lineEl, true)
         }
-        // No preceding line at all — Backspace does nothing.
+        // A heading with no previous line has nothing to merge into — Backspace is a no-op.
 
         emit()
       }
@@ -293,8 +423,7 @@
 
     if (event.key === 'Enter') {
       event.preventDefault()
-      // Enter is a focus-loss trigger too — confirm the line before
-      // splitting it, like Tab would.
+      // Enter is a focus-loss trigger too — confirm the line before splitting it, like Tab would.
       const rawText = lineEl.textContent ?? ''
       const preOffset = caretOffsetInLine(lineEl)
       if (confirmOnLeave(lineEl)) {
@@ -307,10 +436,30 @@
   }
 
   function confirmOnLeave(lineEl: HTMLElement | null): boolean {
-    // A reverted line shouldn't silently re-confirm from a passive trigger
-    // (focus loss, arrow keys) — only Tab should undo a revert.
-    if (lineEl?.dataset.reverted === 'true') return false
-    return confirmLine(lineEl)
+    if (!lineEl) return false
+    // A reverted line shouldn't silently re-confirm from a passive trigger — only Tab can.
+    const confirmed = lineEl.dataset.reverted === 'true' ? false : confirmLine(lineEl)
+    // Must run after confirmLine, whose setLineContent() would wipe out any link structure.
+    confirmLinks(lineEl)
+    return confirmed
+  }
+
+  function handleClick(event: MouseEvent) {
+    const target = event.target
+    const link = target instanceof Element ? target.closest('a.inline-link') : null
+    if (!(link instanceof HTMLAnchorElement)) return
+    // contenteditable="false" doesn't block the <a>'s native navigation — always prevent it.
+    event.preventDefault()
+    if (event.metaKey || event.ctrlKey) {
+      window.open(link.href, '_blank', 'noopener,noreferrer')
+    }
+  }
+
+  function handlePaste(event: ClipboardEvent) {
+    // Default paste can wrap text in a <span>, invisible to confirmLinks — force plain-text insertion.
+    event.preventDefault()
+    const text = event.clipboardData?.getData('text/plain') ?? ''
+    if (text) document.execCommand('insertText', false, text)
   }
 
   function handleFocusOut() {
@@ -343,6 +492,8 @@
     aria-label="메모 본문"
     oninput={handleInput}
     onkeydown={handleKeydown}
+    onclick={handleClick}
+    onpaste={handlePaste}
     onfocusout={handleFocusOut}
   ></div>
   {#if isEmpty && placeholder}
@@ -410,5 +561,20 @@
     position: absolute;
     left: 0;
     color: var(--color-muted);
+  }
+
+  .body-editor :global(.inline-link) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: text;
+  }
+
+  .body-editor :global(.inline-link:hover) {
+    color: var(--color-primary-hover);
+  }
+
+  .body-editor :global(.inline-link:focus-visible) {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 </style>

@@ -1,36 +1,36 @@
 {
   "authority": "system-graph",
   "inputs": {
-    "coverage_sha256": "05bea9ea190d939121425ee4022d27f8488445d44eedd4df948f608618e27c40",
-    "graph_sha256": "81261aaabb4f6dc7f9f90a25d24406d997d72a1743f6d712f308e8a36570acd4",
-    "provenance_sha256": "2b6a9ea11aa0fbd38174092cd5b792f8cf3f5a07d49002d2892a61899160b462"
+    "coverage_sha256": "6717e771dc03fb4a7d626c2cb0ef7a69f206aaf7758eb350a6dc69dd5eb7dc5e",
+    "graph_sha256": "dc5334c3c6cc5e6e98dd7a33f010ec73cf7beeb92ce6b81480774345959e958e",
+    "provenance_sha256": "0b53399bc4299eb99270c36d765cb70e4c95328ec9393d27ed12845eccd23b41"
   },
   "kind": "design-md-core-adoption-receipt",
   "outputs": {
     "coverage": {
       "path": ".omd/system/coverage.json",
-      "sha256": "85082196114a201dea5ba64d22e3b2dcdc95e87ebabd5eb0074c4516a73ed7cf"
+      "sha256": "b7000de4605ddbe633b69f32dd3f1af4c199940c651b8a7021ff9dc405ab60b0"
     },
     "design_md": {
       "path": "DESIGN.md",
-      "sha256": "bfe6e4ffe048041b6826a803ec3347846f68fe718406f2696d21beec7c6d10ef"
+      "sha256": "eff39d3e2d9c00c9ff321a0bc52d23b42a6173ad713f329523a1547aa9a83fa7"
     },
     "graph": {
       "path": ".omd/system/graph.json",
-      "sha256": "7fb6b65cdf4e63974fceb937875b7a331a632a92f0d81b9c3ecf2ad337d493f3"
+      "sha256": "67d6ebebcb7235babb98e7ec6cd50e78e6cc9b59381a98170fb8dd41d51611a3"
     },
     "manifest": {
       "path": ".omd/system/manifest.json",
-      "sha256": "44436c92459b7217c63fa7992dbdf140a0d01278e4341c5dc610c8e4a62f1768"
+      "sha256": "9eeacc795f0957eab286d672a1bcd5d6f3b3e5e1de3b0c2e9f77311b6dc88593"
     },
     "provenance": {
       "path": ".omd/system/provenance.json",
-      "sha256": "48d80a1ff546e94a497e548ac0025e416ab0116df3c08475ad19a41b605c0abc"
+      "sha256": "041efde52c81b3443fd73dcd0df42ec770af606fcd552a1b93217a093d5110af"
     }
   },
   "review": {
     "authority_transition_approved": true,
-    "receipt_sha256": "d2eeccc1df3f1282bce04455e56ae946505073f5a5cc4e9a9d6fabc379f6931d",
+    "receipt_sha256": "4cc3ce87e580098125e880388be5471c65b8b9fc705a4e8215fc949e771794d6",
     "reviewer": {
       "identifier": "iopell2007@gmail.com",
       "role": "project-owner"

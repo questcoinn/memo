@@ -254,6 +254,53 @@
         "variants": [
           "destructive"
         ]
+      },
+      {
+        "anatomy": [
+          "label"
+        ],
+        "id": "link",
+        "interaction": {
+          "kind": "interactive",
+          "state_applicability": {
+            "default": {
+              "applicability": "applicable"
+            },
+            "disabled": {
+              "applicability": "not-applicable",
+              "reason": "링크는 텍스트 안에서 감지되는 즉시 존재하거나(atomic) Backspace로 통째로 삭제되며, 비활성화 상태를 갖지 않는다"
+            },
+            "error": {
+              "applicability": "not-applicable",
+              "reason": "링크는 에러 상태를 갖지 않는다"
+            },
+            "focus-visible": {
+              "applicability": "applicable"
+            },
+            "hover": {
+              "applicability": "applicable"
+            },
+            "loading": {
+              "applicability": "not-applicable",
+              "reason": "링크 자체는 비동기 상태를 갖지 않는다"
+            },
+            "success": {
+              "applicability": "not-applicable",
+              "reason": "링크는 성공 상태를 표시하지 않는다"
+            }
+          }
+        },
+        "semantics": "메모 본문에서 URL 형태 텍스트(http://, https://, www.)를 감지해 만드는 인라인 atomic 링크. 라벨과 목표 주소가 같은 문자열이며, Cmd/Ctrl+클릭으로 열린다.",
+        "states": [
+          "default",
+          "hover",
+          "focus-visible"
+        ],
+        "token_refs": [
+          "color-primary",
+          "color-primary-hover",
+          "typography-body"
+        ]
       }
     ],
     "rules": [
@@ -613,6 +660,13 @@
         ],
         "path": "/typography_assets/roles/5",
         "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "URL 형태 텍스트를 감지해 만드는 인라인 링크 컴포넌트, button-primary와 동일한 color-primary/color-primary-hover 토큰 쌍 재사용 (openspec/changes/add-note-link-formatting/design.md)"
+        ],
+        "path": "/components_states/components/5",
+        "source_class": "agent-proposed-greenfield-decision"
       }
     ],
     "priority": [
@@ -647,7 +701,7 @@
   "projection": {
     "locale": "en",
     "path": "DESIGN.md",
-    "sha256": "bfe6e4ffe048041b6826a803ec3347846f68fe718406f2696d21beec7c6d10ef"
+    "sha256": "eff39d3e2d9c00c9ff321a0bc52d23b42a6173ad713f329523a1547aa9a83fa7"
   },
   "schema_version": "2.0.0",
   "typography_assets": {

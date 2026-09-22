@@ -241,6 +241,28 @@ Required.
 | error | not-applicable | 다이얼로그 자체는 에러 상태를 갖지 않는다 |
 | success | not-applicable | 다이얼로그 자체는 성공 상태를 갖지 않는다 |
 
+### Component: link
+
+**Semantics:** 메모 본문에서 URL 형태 텍스트(http://, https://, www.)를 감지해 만드는 인라인 atomic 링크. 라벨과 목표 주소가 같은 문자열이며, Cmd/Ctrl+클릭으로 열린다.
+
+- Anatomy: label
+- States: default, hover, focus-visible
+- Token references: color-primary, color-primary-hover, typography-body
+
+- Interaction kind: interactive
+
+#### State applicability
+
+| State | Applicability | Reason |
+|---|---|---|
+| default | applicable |  |
+| hover | applicable |  |
+| focus-visible | applicable |  |
+| disabled | not-applicable | 링크는 텍스트 안에서 감지되는 즉시 존재하거나(atomic) Backspace로 통째로 삭제되며, 비활성화 상태를 갖지 않는다 |
+| loading | not-applicable | 링크 자체는 비동기 상태를 갖지 않는다 |
+| error | not-applicable | 링크는 에러 상태를 갖지 않는다 |
+| success | not-applicable | 링크는 성공 상태를 표시하지 않는다 |
+
 ### Rules
 
 - 모든 인터랙티브 컴포넌트는 disabled, loading, error 중 실제로 발생 가능한 상태만 명시적으로 정의한다
@@ -344,3 +366,4 @@ Record, review, and validate changes before adoption.
 - /foundations/tokens/color-overlay — agent-proposed-greenfield-decision; evidence: Toss 레퍼런스에 backdrop/overlay 토큰 없음. color-foreground 50% 알파로 그린필드 결정 (openspec/changes/use-dialog-for-delete-confirm/design.md)
 - /components_states/components/1/variants — agent-proposed-greenfield-decision; evidence: 메모 목록 검색 입력을 위해 text-field에 search variant 추가 (openspec/changes/add-note-search/design.md)
 - /typography_assets/roles/5 — agent-proposed-greenfield-decision; evidence: openspec/changes/add-note-body-formatting/design.md
+- /components_states/components/5 — agent-proposed-greenfield-decision; evidence: URL 형태 텍스트를 감지해 만드는 인라인 링크 컴포넌트, button-primary와 동일한 color-primary/color-primary-hover 토큰 쌍 재사용 (openspec/changes/add-note-link-formatting/design.md)

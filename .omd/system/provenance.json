@@ -104,9 +104,16 @@
       ],
       "path": "/typography_assets/roles/5",
       "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        "openspec/changes/add-note-link-formatting/design.md"
+      ],
+      "path": "/components_states/components/5",
+      "source_class": "agent-proposed-greenfield-decision"
     }
   ],
-  "design_md_sha256": "bfe6e4ffe048041b6826a803ec3347846f68fe718406f2696d21beec7c6d10ef",
-  "graph_sha256": "7fb6b65cdf4e63974fceb937875b7a331a632a92f0d81b9c3ecf2ad337d493f3",
+  "design_md_sha256": "eff39d3e2d9c00c9ff321a0bc52d23b42a6173ad713f329523a1547aa9a83fa7",
+  "graph_sha256": "67d6ebebcb7235babb98e7ec6cd50e78e6cc9b59381a98170fb8dd41d51611a3",
   "schema_version": "2.0.0"
 }
