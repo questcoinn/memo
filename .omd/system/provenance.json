@@ -118,9 +118,16 @@
       ],
       "path": "/components_states/components/6",
       "source_class": "agent-proposed-greenfield-decision"
+    },
+    {
+      "evidence": [
+        "openspec/changes/add-note-tag-search/design.md"
+      ],
+      "path": "/components_states/components/2",
+      "source_class": "agent-proposed-greenfield-decision"
     }
   ],
-  "design_md_sha256": "2529dabeb7924f9a3d0159426d19514692106b870c1b0a1fe383e72aee5bacc3",
-  "graph_sha256": "9eb623b4fe0630a179be900ce4f129e5e6dab1aeb812d4517b88eae9bbc34eab",
+  "design_md_sha256": "9a098016a1bffe1ed0faf2c12a004df377a6ded02c4b02f294e79366fdc95994",
+  "graph_sha256": "ca7095122f42976e2581683579511947fd1a8004f59079c07e5981e9d3e53237",
   "schema_version": "2.0.0"
 }

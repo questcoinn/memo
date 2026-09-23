@@ -122,10 +122,37 @@
         ],
         "id": "tag",
         "interaction": {
-          "kind": "non-interactive",
-          "reason": "기본 태그는 상태 정보 표시용이며, 필터로 쓰일 때의 클릭 동작은 별도 필터-칩 컴포넌트 확장에서 다룬다"
+          "kind": "interactive",
+          "state_applicability": {
+            "default": {
+              "applicability": "applicable"
+            },
+            "disabled": {
+              "applicability": "not-applicable",
+              "reason": "노트 카드에 보이는 태그는 항상 필터로 클릭 가능하며 비활성화 상태를 갖지 않는다"
+            },
+            "error": {
+              "applicability": "not-applicable",
+              "reason": "태그 필터 토글은 실패하지 않는 로컬 상태 변경이다"
+            },
+            "focus-visible": {
+              "applicability": "applicable"
+            },
+            "hover": {
+              "applicability": "not-applicable",
+              "reason": "text-field와 마찬가지로 별도 hover 스타일을 정의하지 않는다"
+            },
+            "loading": {
+              "applicability": "not-applicable",
+              "reason": "태그 필터 토글은 로컬 상태 변경이며 비동기 상태를 갖지 않는다"
+            },
+            "success": {
+              "applicability": "not-applicable",
+              "reason": "필터 적용은 목록이 즉시 갱신되는 것으로 전달되며 별도 성공 상태를 표시하지 않는다"
+            }
+          }
         },
-        "semantics": "메모를 분류하는 라벨. 클릭 가능한 필터 칩으로도 사용되지만 그 자체는 서술적 정보다.",
+        "semantics": "메모를 분류하는 라벨. 클릭하면 해당 태그를 노트 목록의 활성 필터로 토글한다.",
         "states": [
           "default",
           "selected"
@@ -730,6 +757,13 @@
           "메모에 태그를 부여하는 칩 입력기. 기존 tag는 non-interactive로 못박혀 있어 재사용 불가하여 별도 인터랙티브 컴포넌트로 추가 (openspec/changes/add-note-tags/design.md)"
         ],
         "path": "/components_states/components/6",
+        "source_class": "agent-proposed-greenfield-decision"
+      },
+      {
+        "evidence": [
+          "노트 카드의 태그 칩이 클릭 가능한 필터 토글이 되면서 tag 컴포넌트의 Interaction kind를 non-interactive에서 interactive로, selected state를 load-bearing으로 변경 (openspec/changes/add-note-tag-search/design.md)"
+        ],
+        "path": "/components_states/components/2",
         "source_class": "agent-proposed-greenfield-decision"
       }
     ],
